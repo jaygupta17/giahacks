@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Heritage Conservation Complaints</title>
+
+<!-- Firebase SDK -->
+<link rel="stylesheet" href="styles.css">
+
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/7.14.1/firebase-database.js"></script>
+
+</head>
+<body>
+<table id="complaintTable">
+  <thead>
+    <tr>
+      <th>Complainant Name</th>
+      <th>Heritage Name</th>
+      <th>Heritage Site</th>
+      <th>Damage Type</th>
+      <th>Complaint Description</th>
+      <th>Contact Information</th>
+      <th>Evidence Link</th>
+    </tr>
+  </thead>
+  <tbody>
+    <!-- Data will be dynamically added here -->
+  </tbody>
+</table>
+
+<script>
+// Your web app's Firebase configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyAo-bVbR4V4kZ1CH3WLFL8Lc_GRiu1Tids",
+  authDomain: "heritage-one-stop.firebaseapp.com",
+  databaseURL: "https://heritage-one-stop-default-rtdb.firebaseio.com",
+  projectId: "heritage-one-stop",
+  storageBucket: "heritage-one-stop.appspot.com",
+  messagingSenderId: "837007147906",
+  appId: "1:837007147906:web:bdd77f5743677f7e84059b"
+};
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+
+  // Function to fetch data from Realtime Database and display in table
+  function displayData() {
+    db.ref("complaintForm").once("value", (snapshot) => {
+      snapshot.forEach((childSnapshot) => {
+        const data = childSnapshot.val();
+        addRowToTable(data);
+      });
+    });
+  }
+
+  // Function to add a row to the table
+  function addRowToTable(data) {
+    const tableBody = document.getElementById("complaintTable").getElementsByTagName('tbody')[0];
+    const row = tableBody.insertRow();
+    const cell1 = row.insertCell(0);
+    const cell2 = row.insertCell(1);
+    const cell3 = row.insertCell(2);
+    const cell4 = row.insertCell(3);
+    const cell5 = row.insertCell(4);
+    const cell6 = row.insertCell(5);
+    const cell7 = row.insertCell(6);
+    cell1.textContent = data.complainant_name;
+    cell2.textContent = data.heritage_name;
+    cell3.textContent = data.heritage_site;
+    cell4.textContent = data.damage_type;
+    cell5.textContent = data.complaint_description;
+    cell6.textContent = data.complainant_contact;
+    cell7.textContent = data.evidence_link;
+  }
+
+  // Call displayData function when the page loads
+  displayData();
+</script>
+
+</body>
+</html>
