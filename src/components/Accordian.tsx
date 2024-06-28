@@ -9,13 +9,13 @@ export function AccordionDemo() {
   return (
     <>
     <h1 className="flex justify-center items-center text-2xl font-bold md:text-4xl text-black">
-      FAQ'S
+      FAQ
     </h1>
     <Accordion type="single" collapsible className=" ml-[6%] w-[86%] mb-[4%] text-black">
       <AccordionItem value="item-1">
         <AccordionTrigger>Is it accessible?</AccordionTrigger>
         <AccordionContent>
-          Yes. It adheres to the WAI-ARIA design pattern.
+          Yes. It adheres to the WAIARIA design pattern.
         </AccordionContent>
       </AccordionItem>
       <AccordionItem value="item-2">
