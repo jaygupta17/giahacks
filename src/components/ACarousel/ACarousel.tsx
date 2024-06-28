@@ -1,5 +1,4 @@
 import React from 'react'
-import { ModeToggle } from '../toggle'
 import { SignInButton, SignedIn, SignedOut, UserButton } from '@clerk/nextjs'
 import { Button } from '../ui/button'
 import { ArrowRight } from 'lucide-react'
