@@ -6,10 +6,10 @@ const Footer = () => {
     <footer className="text-black bg-white body-font w-screen">
   <div className="container px-5 py-8 mx-auto flex items-center sm:flex-row flex-col">
     <a className="flex title-font font-medium items-center md:justify-start justify-center text-white">
-      <span className="ml-3 text-xl text-black">Heritage One-stop</span>
+      <span className="ml-3 text-xl text-black">Healthcare One-stop</span>
     </a>
     <p className="text-sm text-black sm:ml-4 sm:pl-4 sm:border-l-2 sm:border-gray-800 sm:py-2 sm:mt-0 mt-4">© 2024 —
-      <a href="http://kuki.co.in" className="text-gray-900 ml-1" target="_blank" rel="noopener noreferrer">HeritageOnestop.co</a>
+      <a href="http://kuki.co.in" className="text-gray-900 ml-1" target="_blank" rel="noopener noreferrer">HealthcareOnestop.co</a>
     </p>
     <span className="inline-flex sm:ml-auto sm:mt-0 mt-4 justify-center sm:justify-start mr-6">
       <a className="text-gray-600">

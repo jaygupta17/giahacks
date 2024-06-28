@@ -1,3 +1,4 @@
+
 import React from "react";
 import { SignInButton, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 import { Button } from "../ui/button";
@@ -7,10 +8,10 @@ import Link from "next/link";
 
 const Header = () => {
   return (
-    <div className="flex flex-center-between py-8 h-[5rem] bg-white">
-      <div className="container flex flex-center-between h-16 max-w-screen-2xl items-center">
+    <div className="flex items-center justify-between py-8 h-[5rem] bg-white">
+      <div className="container flex justify-between h-16 max-w-screen-2xl items-center">
         <div className="font-extrabold">
-          <Image src={""} alt="logo" height={250} width={250}></Image>
+          <Image src={"/aldenaire.png"} alt="logo" height={150} width={150}></Image>
         </div>
         <div className="flex gap-10">
           <div className="lg:flex md:hidden gap-8 text-black">
@@ -39,9 +40,9 @@ const Header = () => {
             <SignInButton />
           </SignedOut>
           <SignedIn>
-            <Link href="/dashboard">
+            {/* <Link href="/dashboard">
               <Button className="flex-center bg-black text-white">Dashboard</Button>
-            </Link>
+            </Link> */}
             <UserButton />
           </SignedIn>
         </div>

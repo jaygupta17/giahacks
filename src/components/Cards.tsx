@@ -1,46 +1,60 @@
-import { HoverEffect } from "../components/ui/card-hover-effect";
+"use client";
+import React from "react";
+import { EvervaultCard, Icon } from "@/components/ui/evervault-card";
 
-export function CardHoverEffectDemo() {
+export function EvervaultCardDemo() {
   return (
     <>
-      <div className="flex flex-center items-center mt-[5%] text-5xl text-black font-bold">
-        Features We Offer
-      </div>
-      <div className="max-w-6xl h-[80%] mx-auto px-8">
-        <HoverEffect items={projects} />
+      <h1 className="flex justify-center items-center text-2xl font-bold md:text-4xl text-black mt-[3%] mb-[3%]">
+        What We Offer
+      </h1>
+      <div className="flex mt-[4%] mb-[5%]">
+        <div className="border bg-black border-black/[0.2] dark:border-white/[0.2] flex flex-col items-start max-w-sm mx-auto p-4 relative h-[30rem]">
+          <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
+          <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black" />
+          <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-white text-black" />
+          <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black" />
+
+          <EvervaultCard text="AR/VR" />
+
+          <h2 className="dark:text-white text-black mt-4 text-md font-semibold">
+            AR/VR based healthcare tour of Healthcare facilities for a more immersive experience.
+          </h2>
+          <p className="text-sm border font-light dark:border-white/[0.2] border-black/[0.2] rounded-full mt-4 text-black dark:text-white px-2 py-0.5">
+            Watch me hover
+          </p>
+        </div>
+        <div className="border bg-black border-black/[0.2] dark:border-white/[0.2] flex flex-col items-start max-w-sm mx-auto p-4 relative h-[30rem]">
+          <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
+          <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black" />
+          <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-white text-black" />
+          <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black" />
+
+          <EvervaultCard text="Funding" />
+
+          <h2 className="dark:text-white text-black mt-4 text-md font-semibold">
+            Blockchain based Funding System for Healthcare Facilities.
+          </h2>
+          <p className="text-sm border font-light dark:border-white/[0.2] border-black/[0.2] rounded-full mt-4 text-black dark:text-white px-2 py-0.5">
+            Watch me hover
+          </p>
+        </div>
+        <div className="border bg-black border-black/[0.2] dark:border-white/[0.2] flex flex-col items-start max-w-sm mx-auto p-4 relative h-[30rem]">
+          <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
+          <Icon className="absolute h-6 w-6 -bottom-3 -left-3 dark:text-white text-black" />
+          <Icon className="absolute h-6 w-6 -top-3 -right-3 dark:text-white text-black" />
+          <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black" />
+
+          <EvervaultCard text="AI" />
+
+          <h2 className="dark:text-white text-black mt-4 text-md font-semibold">
+            AI based healthcare assistant for personalized healthcare solutions.
+          </h2>
+          <p className="text-sm border font-light dark:border-white/[0.2] border-black/[0.2] rounded-full mt-4 text-black dark:text-white px-2 py-0.5">
+            Watch me hover
+          </p>
+        </div>
       </div>
     </>
   );
 }
-export const projects = [
-  {
-    title: "Complaint Filing ",
-    description:
-      "Allows users to file and track complaints regarding the maintenance of heritage sites.",
-    link: "./complaint",
-  },
-  {
-    title: "Event & Workshop",
-    description:
-      "Keeps users informed about events and workshops related to heritage conservation.",
-    link: "./workshop",
-  },
-  {
-    title: "VR Heritage Viewing",
-    description:
-      "Allows users to view heritage sites in augmented reality, regardless of their current location.",
-    link: "./room",
-  },
-  {
-    title: "Chatbot Interaction",
-    description:
-      "Provides an AI-powered chatbot for users to discuss various heritage sites using the Gemini API.",
-    link: "./chatbot",
-  },
-  {
-    title: "UNESCO Heritage Sites",
-    description:
-      "This shows the list of heritage sites that are recognized by UNESCO.",
-    link: "https://whc.unesco.org/en/list/",
-  },
-];
