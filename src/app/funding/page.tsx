@@ -35,7 +35,7 @@ const CampaignPage = () => {
         </div>
         <div className="grid place-content-center gap-y-8 grid-cols-1 w-[90%]">
           {campaigns.map((camp:any)=>(
-            <CampaignCard pId={camp.pId} owner={camp.owner} amountCollected={camp.amountCollected} descr={camp.descr} target={camp.target} title={camp.title}/>
+            <CampaignCard key={camp.pId} pId={camp.pId} owner={camp.owner} amountCollected={camp.amountCollected} descr={camp.descr} target={camp.target} title={camp.title}/>
            
 ))}
           {/* <CampaignCard/> */}

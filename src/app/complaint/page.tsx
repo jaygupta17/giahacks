@@ -39,7 +39,7 @@ const ComplaintPage = () => {
         </div>
         <div className="grid place-content-center gap-y-8 grid-cols-1 w-[90%]">
           {data.length ? data.map((complaint : complaint)=>(
-            <ComplaintCard contact={complaint.contact} site={complaint.site} descr={complaint.descr} evidence={complaint.evidence} username={complaint.username} damage={complaint.damage} heritage={complaint.heritage} />
+            <ComplaintCard key={complaint.descr} contact={complaint.contact} site={complaint.site} descr={complaint.descr} evidence={complaint.evidence} username={complaint.username} damage={complaint.damage} heritage={complaint.heritage} />
           )) : "Nothing to see" }
         </div>
     </div>
