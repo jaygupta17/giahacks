@@ -1,7 +1,5 @@
 "use server"
 
-import { revalidatePath } from "next/cache"
-
 export const createComplaint = async(values:any) => {
     try {
         fetch("http://localhost:8000/complaints", {
