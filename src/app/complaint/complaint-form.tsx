@@ -25,6 +25,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { SetStateAction } from "react"
+import { createComplaint } from "../../../actions"
 
 const formSchema = z.object({
   username: z.string().min(2, {
@@ -48,7 +49,7 @@ export function ComplaintForm() {
   })
  
   function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values)
+    createComplaint(values).then(res=>console.log(res)).catch(error=>console.log(error))
   }
  
   return (
@@ -117,11 +118,11 @@ export function ComplaintForm() {
                   </SelectTrigger>
                 </FormControl>
                 <SelectContent>
-                  <SelectItem value="historical">Neglect</SelectItem>
-                  <SelectItem value="museum">vandalism</SelectItem>
-                  <SelectItem value="monument">Structural</SelectItem>
-                  <SelectItem value="cultural">Environmental</SelectItem>
-                  <SelectItem value="archaeological">other</SelectItem>
+                  <SelectItem value="neglect">Neglect</SelectItem>
+                  <SelectItem value="vandalism">vandalism</SelectItem>
+                  <SelectItem value="structural">Structural</SelectItem>
+                  <SelectItem value="environmental">Environmental</SelectItem>
+                  <SelectItem value="other">other</SelectItem>
                 </SelectContent>
               </Select>
               <FormMessage />
