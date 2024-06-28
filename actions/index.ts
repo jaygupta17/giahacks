@@ -31,3 +31,9 @@ export const getComplaints = async() => {
 }
 
 
+
+
+
+export const createNewCampaign = async () => {
+    
+}

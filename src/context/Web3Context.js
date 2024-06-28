@@ -1,9 +1,10 @@
 "use client"
 
 import Web3Modal from "web3modal";
-import ethers from "ethers";
+import {ethers} from "ethers";
 import { contractAddress,abi } from "./constants";
 import { createContext, useEffect, useState } from "react";
+import { date } from "zod";
 
 
 const fetchContract = (signerOrProvider) => {
@@ -12,16 +13,19 @@ const fetchContract = (signerOrProvider) => {
 
 export const Web3Context = createContext();
 export const Web3Provider = ({children}) => {
-    const [address,setAddress]  = useState()
+    const [address,setAddress]  = useState("")
+    const [isPending,setIsPending] = useState()
     const createCampaign = async(campaign) => {
-        const {title,descr,target,deadline} = campaign;
+        const {title,descr,target} = campaign;
         const web3modal = new Web3Modal();
         const connection =await web3modal.connect();
         const provider = new ethers.BrowserProvider(connection);
-        const signer = provider.getSigner();
+        const signer =await provider.getSigner();
         const contract = fetchContract(signer);
+        const targetInWei = ethers.parseUnits(target, 18); 
+        const addressObject = ethers.getAddress(address);             
         try {
-            const transaction = await contract.createCampaign(address,title,descr,ethers.utils.parseUnits(target,18),new Date(deadline).getTime());
+            const transaction = await contract.createCampaign(addressObject,title,descr,targetInWei);
            await transaction.wait();
            console.log("success: ",transaction);
         } catch (error) {
@@ -30,14 +34,15 @@ export const Web3Provider = ({children}) => {
     }
 
     const getCampaigns = async() => {
-        const provider = new ethers.JsonRpcProvider()
+        const web3modal = new Web3Modal();
+        const connection =await web3modal.connect();
+        const provider = new ethers.BrowserProvider(connection);
         const contract = fetchContract(provider);
         const campaigns = await contract.getCampaigns();
         const parsedCampaigns = campaigns.map((camp,i)=>({
             owner:camp.owner,
             title: camp.title,
             descr:camp.descr,
-            deadline:camp.deadline.toNumber(),
             target: ethers.formatEther(camp.target.toString()),
             amountCollected:ethers.formatEther(camp.amountCollected.toString()),
             pId:i
@@ -46,19 +51,20 @@ export const Web3Provider = ({children}) => {
     }
 
     const getUserCampaigns = async ( ) => {
-        const provider = new ethers.JsonRpcProvider()
+        const web3modal = new Web3Modal();
+        const connection =await web3modal.connect();
+        const provider = new ethers.BrowserProvider(connection);      
         const contract = fetchContract(provider);
         const campaigns = await contract.getCampaigns();
         const accounts = await window.ethereum.request({
             method:"eth_accounts",
         })
         const currentUser = accounts[0];
-        const filterCampaigns = campaigns.filter((camp)=>camp.owner==currentUser)
+        const filterCampaigns = campaigns.filter((camp)=>!camp.owner==address)
         const userData = filterCampaigns.map((camp,i)=>({
             owner:camp.owner,
             title: camp.title,
             descr:camp.descr,
-            deadline:camp.deadline.toNumber(),
             target: ethers.formatEther(camp.target.toString()),
             amountCollected:ethers.formatEther(camp.amountCollected.toString()),
             pId:i
@@ -67,10 +73,11 @@ export const Web3Provider = ({children}) => {
     }
 
     const donate = async (pId,amount)=>{
+        setIsPending(true)
         const web3modal = new Web3Modal;
         const connection =await web3modal.connect();
         const provider = new ethers.BrowserProvider(connection);
-        const signer = provider.getSigner();
+        const signer =await provider.getSigner();
         const contract = fetchContract(signer);
         try {
             const transaction = await contract.donate(pId,{
@@ -79,14 +86,18 @@ export const Web3Provider = ({children}) => {
            await transaction.wait();
            location.reload();
            console.log("success: ",transaction);
+           setIsPending(false)
            return  transaction
         } catch (error) {
-            console.log(error);
+            setIsPending(false)
+            alert(error);
         }
     }
 
     const getDonations = async (pId) => {
-        const provider = new ethers.JsonRpcProvider()
+        const web3modal = new Web3Modal();
+        const connection =await web3modal.connect();
+        const provider = new ethers.BrowserProvider(connection);
         const contract = fetchContract(provider);
         const donations = await contract.getDonators(pId);
         const noOfDonations = donations[0].length;
@@ -119,7 +130,7 @@ export const Web3Provider = ({children}) => {
     }
 
     useEffect(()=>{
-        checkIfWalletConnected();
+        // checkIfWalletConnected();
     },[])
 
     const connectWallet = async () => {

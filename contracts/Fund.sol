@@ -10,7 +10,6 @@ contract Fund {
     address owner;
     string title;
     string descr;
-    uint256 deadline;
     uint256 target;
     uint256 amountCollected;
     address[] donators;
@@ -20,13 +19,11 @@ contract Fund {
     mapping(uint256=>Campaign) public campaigns;
 
     uint256 public noOfCampaigns = 0;
-    function createCampaign(address _owner, string memory _title, string memory _descr,uint256 _target,uint256 _deadline) public returns (uint256){
+    function createCampaign(address _owner, string memory _title, string memory _descr,uint256 _target) public returns (uint256){
         Campaign storage campaign = campaigns[noOfCampaigns];
-        require(campaign.deadline<block.timestamp, "Deadline should be in fututre");
         campaign.owner = _owner;
         campaign.title = _title;
         campaign.descr = _descr;
-        campaign.deadline = _deadline;
         campaign.target = _target;
         noOfCampaigns++;
         return noOfCampaigns-1;
