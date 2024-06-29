@@ -31,13 +31,12 @@ const formSchema = z.object({
   username: z.string().min(2, {
     message: "Username must be at least 2 characters.",
   }),
-  heritage: z.string(),
-  site: z.string(),
-  damage :z.string(),
+  subject: z.string(),
+  disease: z.string(),
+  issue :z.string(),
   descr: z.string(),
   contact: z.string(),
   evidence:z.string(),
-
 })
 
 export function ComplaintForm() {
@@ -70,10 +69,10 @@ export function ComplaintForm() {
         />
          <FormField
           control={form.control}
-          name="heritage"
+          name="subject"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-white/80">Heritage Name</FormLabel>
+              <FormLabel className="text-white/80">Subject</FormLabel>
               <FormControl>
                 <Input placeholder="shadcn" {...field} />
               </FormControl>
@@ -83,48 +82,26 @@ export function ComplaintForm() {
         />
          <FormField
           control={form.control}
-          name="site"
+          name="disease"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-white/80">Heritage Site</FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="type of Heritage site" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="historical">Historical Building</SelectItem>
-                  <SelectItem value="museum">Museum</SelectItem>
-                  <SelectItem value="monument">Monument</SelectItem>
-                  <SelectItem value="cultural">Cultural Landscape</SelectItem>
-                  <SelectItem value="archaeological">Archaeological</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormLabel className="text-white/80">Disease</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
          <FormField
           control={form.control}
-          name="damage"
+          name="issue"
           render={({ field }) => (
             <FormItem>
-              <FormLabel className="text-white/80">Type of damage </FormLabel>
-              <Select onValueChange={field.onChange} defaultValue={field.value}>
-                <FormControl>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Type of damage" />
-                  </SelectTrigger>
-                </FormControl>
-                <SelectContent>
-                  <SelectItem value="neglect">Neglect</SelectItem>
-                  <SelectItem value="vandalism">vandalism</SelectItem>
-                  <SelectItem value="structural">Structural</SelectItem>
-                  <SelectItem value="environmental">Environmental</SelectItem>
-                  <SelectItem value="other">other</SelectItem>
-                </SelectContent>
-              </Select>
+              <FormLabel className="text-white/80">Issue</FormLabel>
+              <FormControl>
+                <Input placeholder="shadcn" {...field} />
+              </FormControl>
               <FormMessage />
             </FormItem>
           )}
