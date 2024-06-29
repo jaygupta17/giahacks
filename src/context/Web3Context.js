@@ -27,10 +27,15 @@ export const Web3Provider = ({children}) => {
         const addressObject = ethers.getAddress(address);             
         try {
             const transaction = await contract.createCampaign(addressObject,title,descr,targetInWei);
+            setLoading(true)
            await transaction.wait();
+           location.reload()
+           setLoading(false)
            console.log("success: ",transaction);
         } catch (error) {
+            setLoading(false)
             console.log(error);
+            alert("Please connect")
         }
     }
 
