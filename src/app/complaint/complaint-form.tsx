@@ -49,6 +49,7 @@ export function ComplaintForm() {
  
   function onSubmit(values: z.infer<typeof formSchema>) {
     createComplaint(values).then(res=>console.log(res)).catch(error=>console.log(error))
+    location.reload()
   }
  
   return (

@@ -45,7 +45,7 @@ export const CampaignCard = ({title,pId,owner,amountCollected,descr,target}:{tit
             </div > : <div className="flex text-white">Reply &nbsp;  <ReplyIcon onClick={()=>setopen(true)} className="text-white cursor-pointer size-8"/></div>}
         </div>
         <div className="grid place-content-center gap-x-4 grid-cols-2">
-            <input type="text" disabled={isPending} onChange={(e)=>setValue(e.target.value)} />
+            <input type="text" className="dark:text-white" disabled={isPending} onChange={(e)=>setValue(e.target.value)} />
         <Button disabled={isPending} className="hover:bg-indigo-500 bg-indigo-600" onClick={donatemoney}>{isPending ? "Loading" : "Fund"}</Button>
         </div>
 </div>

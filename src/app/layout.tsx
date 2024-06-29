@@ -13,11 +13,11 @@ const inter = Inter({
 
 export const metadata = {
   title: {
-    default: "Heritage One Stop",
-    template: "%s | Heritage One Stop",
+    default: "Healthcare One Stop",
+    template: "%s | Healthcare One Stop",
   },
   description: "",
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
+  icons: [{ rel: "icon", url: "./logo.png" }],
 };
 
 export default function RootLayout({

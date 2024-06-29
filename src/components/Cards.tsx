@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { EvervaultCard, Icon } from "@/components/ui/evervault-card";
+import Link from "next/link";
 
 export function EvervaultCardDemo() {
   return (
@@ -20,9 +21,11 @@ export function EvervaultCardDemo() {
           <h2 className="dark:text-white text-black mt-4 text-md font-semibold">
             AR/VR based healthcare tour of Healthcare facilities for a more immersive experience.
           </h2>
+          <Link href={'./room'}>
           <p className="text-sm border font-light dark:border-white/[0.2] border-black/[0.2] rounded-full mt-4 text-black dark:text-white px-2 py-0.5">
             Watch me hover
           </p>
+          </Link>
         </div>
         <div className="border bg-black border-black/[0.2] dark:border-white/[0.2] flex flex-col items-start max-w-sm mx-auto p-4 relative h-[30rem]">
           <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
@@ -31,13 +34,15 @@ export function EvervaultCardDemo() {
           <Icon className="absolute h-6 w-6 -bottom-3 -right-3 dark:text-white text-black" />
 
           <EvervaultCard text="Funding" />
-
+          
           <h2 className="dark:text-white text-black mt-4 text-md font-semibold">
             Blockchain based Funding System for Healthcare Facilities.
           </h2>
+          <Link href={"/funding"}> 
           <p className="text-sm border font-light dark:border-white/[0.2] border-black/[0.2] rounded-full mt-4 text-black dark:text-white px-2 py-0.5">
             Watch me hover
           </p>
+          </Link >
         </div>
         <div className="border bg-black border-black/[0.2] dark:border-white/[0.2] flex flex-col items-start max-w-sm mx-auto p-4 relative h-[30rem]">
           <Icon className="absolute h-6 w-6 -top-3 -left-3 dark:text-white text-black" />
@@ -50,9 +55,11 @@ export function EvervaultCardDemo() {
           <h2 className="dark:text-white text-black mt-4 text-md font-semibold">
             AI based healthcare assistant for personalized healthcare solutions.
           </h2>
+          <Link href={"/chatbot"}> 
           <p className="text-sm border font-light dark:border-white/[0.2] border-black/[0.2] rounded-full mt-4 text-black dark:text-white px-2 py-0.5">
             Watch me hover
           </p>
+          </Link>
         </div>
       </div>
     </>

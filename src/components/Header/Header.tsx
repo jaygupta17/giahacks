@@ -5,13 +5,14 @@ import { Button } from "../ui/button";
 import { ArrowRight } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
+import Menu from "../Dropdown";
 
 const Header = () => {
   return (
     <div className="flex items-center justify-between py-8 h-[5rem] bg-white">
       <div className="container flex justify-between h-16 max-w-screen-2xl items-center">
         <div className="font-extrabold">
-          <Image src={"/aldenaire.png"} alt="logo" height={150} width={150}></Image>
+          <Image src={"/logo.png"} alt="logo" height={150} width={150}></Image>
         </div>
         <div className="flex gap-10">
           <div className="lg:flex md:hidden gap-8 text-black">
@@ -32,7 +33,12 @@ const Header = () => {
               href="/contact"
             >
               Contact Us
-            </Link>
+            </Link>     
+            <Link
+              className="font-bold text-base transition-colors hover:text-foreground/80 text-foreground/60"
+              href="/complaint"
+            >
+              Complaint</Link>    
           </div>
         </div>
         <div className="flex-center gap-4 mr-14">
