@@ -38,8 +38,6 @@ const CampaignPage = () => {
             <CampaignCard key={camp.pId} pId={camp.pId} owner={camp.owner} amountCollected={camp.amountCollected} descr={camp.descr} target={camp.target} title={camp.title}/>
            
 ))}
-          {/* <CampaignCard/> */}
-          {/* <CampaignCard/> */}
         </div>
     </div>
   )

@@ -5,6 +5,7 @@ import {ethers} from "ethers";
 import { contractAddress,abi } from "./constants";
 import { createContext, useEffect, useState } from "react";
 import { date } from "zod";
+import Loading from "@/app/loading";
 
 
 const fetchContract = (signerOrProvider) => {
@@ -13,8 +14,8 @@ const fetchContract = (signerOrProvider) => {
 
 export const Web3Context = createContext();
 export const Web3Provider = ({children}) => {
+    const [loading,setLoading] = useState()
     const [address,setAddress]  = useState("")
-    const [isPending,setIsPending] = useState()
     const createCampaign = async(campaign) => {
         const {title,descr,target} = campaign;
         const web3modal = new Web3Modal();
@@ -34,9 +35,8 @@ export const Web3Provider = ({children}) => {
     }
 
     const getCampaigns = async() => {
-        const web3modal = new Web3Modal();
-        const connection =await web3modal.connect();
-        const provider = new ethers.BrowserProvider(connection);
+        // const provider =new ethers.JsonRpcProvider(process.env.ALCHEMY_PROVIDER)
+        const provider =new ethers.JsonRpcProvider("https://eth-sepolia.g.alchemy.com/v2/oOKOmZhmx_akIf1s6wseaiwNWX7LBdN_") 
         const contract = fetchContract(provider);
         const campaigns = await contract.getCampaigns();
         const parsedCampaigns = campaigns.map((camp,i)=>({
@@ -51,9 +51,7 @@ export const Web3Provider = ({children}) => {
     }
 
     const getUserCampaigns = async ( ) => {
-        const web3modal = new Web3Modal();
-        const connection =await web3modal.connect();
-        const provider = new ethers.BrowserProvider(connection);      
+        const provider =new ethers.JsonRpcProvider("https://eth-sepolia.g.alchemy.com/v2/oOKOmZhmx_akIf1s6wseaiwNWX7LBdN_")     
         const contract = fetchContract(provider);
         const campaigns = await contract.getCampaigns();
         const accounts = await window.ethereum.request({
@@ -73,7 +71,6 @@ export const Web3Provider = ({children}) => {
     }
 
     const donate = async (pId,amount)=>{
-        setIsPending(true)
         const web3modal = new Web3Modal;
         const connection =await web3modal.connect();
         const provider = new ethers.BrowserProvider(connection);
@@ -83,21 +80,20 @@ export const Web3Provider = ({children}) => {
             const transaction = await contract.donate(pId,{
                 value:ethers.parseEther(amount)
             });
+            setLoading(true)
            await transaction.wait();
+           setLoading(false)
            location.reload();
            console.log("success: ",transaction);
-           setIsPending(false)
            return  transaction
         } catch (error) {
-            setIsPending(false)
+            setLoading(false)
             alert(error);
         }
     }
 
     const getDonations = async (pId) => {
-        const web3modal = new Web3Modal();
-        const connection =await web3modal.connect();
-        const provider = new ethers.BrowserProvider(connection);
+        const provider =new ethers.JsonRpcProvider("https://eth-sepolia.g.alchemy.com/v2/oOKOmZhmx_akIf1s6wseaiwNWX7LBdN_") 
         const contract = fetchContract(provider);
         const donations = await contract.getDonators(pId);
         const noOfDonations = donations[0].length;
@@ -158,7 +154,7 @@ export const Web3Provider = ({children}) => {
             createCampaign,
             donate
         }}>
-            {children}
+            {loading? <Loading/> : children}
         </Web3Context.Provider>
     )
 }
