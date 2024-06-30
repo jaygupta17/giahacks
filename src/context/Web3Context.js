@@ -14,28 +14,33 @@ const fetchContract = (signerOrProvider) => {
 
 export const Web3Context = createContext();
 export const Web3Provider = ({children}) => {
-    const [loading,setLoading] = useState()
+    const [loading,setLoading] = useState(false)
     const [address,setAddress]  = useState("")
     const createCampaign = async(campaign) => {
-        const {title,descr,target} = campaign;
-        const web3modal = new Web3Modal();
-        const connection =await web3modal.connect();
-        const provider = new ethers.BrowserProvider(connection);
-        const signer =await provider.getSigner();
-        const contract = fetchContract(signer);
-        const targetInWei = ethers.parseUnits(target, 18); 
-        const addressObject = ethers.getAddress(address);             
+        setLoading(true)
         try {
+            const {title,descr,target} = campaign;
+            const web3modal = new Web3Modal();
+            const connection =await web3modal.connect();
+            const provider = new ethers.BrowserProvider(connection);
+            const signer =await provider.getSigner();
+            const contract = fetchContract(signer);
+            const targetInWei = ethers.parseUnits(target, 18); 
+            const addressObject = ethers.getAddress(address);          
             const transaction = await contract.createCampaign(addressObject,title,descr,targetInWei);
-            setLoading(true)
            await transaction.wait();
            location.reload()
            setLoading(false)
            console.log("success: ",transaction);
+           return {
+            success: "Success",
+            }
         } catch (error) {
             setLoading(false)
-            console.log(error);
-            alert("Please connect")
+            return {
+                error: "Something went wrong",
+            }
+           
         }
     }
 
@@ -76,16 +81,16 @@ export const Web3Provider = ({children}) => {
     }
 
     const donate = async (pId,amount)=>{
-        const web3modal = new Web3Modal;
-        const connection =await web3modal.connect();
-        const provider = new ethers.BrowserProvider(connection);
-        const signer =await provider.getSigner();
-        const contract = fetchContract(signer);
+        setLoading(true)
         try {
+            const web3modal = new Web3Modal;
+            const connection =await web3modal.connect();
+            const provider = new ethers.BrowserProvider(connection);
+            const signer =await provider.getSigner();
+            const contract = fetchContract(signer);
             const transaction = await contract.donate(pId,{
                 value:ethers.parseEther(amount)
             });
-            setLoading(true)
            await transaction.wait();
            setLoading(false)
            location.reload();
@@ -115,36 +120,65 @@ export const Web3Provider = ({children}) => {
     const checkIfWalletConnected = async () => {
         try {
             if (!window.ethereum) {
-                return alert("Install Metamask")
+                return {
+                    error : "Install Metamask"
+                }
             }
             const accounts = await window.ethereum.request({
                 method:"eth_accounts"
             })
             if (accounts.length) {
                 setAddress(accounts[0])
+                return {
+                    success : "please wait"
+                }
             }else{
-                alert("account not found")
+                const accounts = await window.ethereum.request({
+                    method:"eth_requestAccounts"
+                })
+                if (accounts.length) {
+                    setAddress(accounts[0])
+                    return {
+                        success : "please wait"
+                    }
+                }else{
+                    return {
+                        error : "Please Connect Your wallet"
+                    }
+                }
             }
         } catch (error) {
-            alert("error: while checking")
+            return {
+                error : "Something went wrong"
+            }
         }
     }
 
     useEffect(()=>{
-        // checkIfWalletConnected();
+        checkIfWalletConnected();
     },[])
 
     const connectWallet = async () => {
         try {
             if (!window.ethereum) {
-                return alert("Install Metamask")
+                return {
+                    error : "Install Metamask"
+                }
             }
+            setLoading(true)
             const accounts = await window.ethereum.request({
                 method:"eth_requestAccounts"
             })
             setAddress(accounts[0])
+            setLoading(false)
+            return {
+                success : "connected"
+            }
         } catch (error) {
-            alert("error: while connecting")
+            setLoading(false)
+            return {
+                error : "Something went wrong"
+            }
         }
     }
 
@@ -157,7 +191,8 @@ export const Web3Provider = ({children}) => {
             getDonations,
             getUserCampaigns,
             createCampaign,
-            donate
+            donate,
+            loading
         }}>
             {loading? <Loading/> : children}
         </Web3Context.Provider>

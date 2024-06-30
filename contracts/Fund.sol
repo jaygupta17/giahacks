@@ -34,10 +34,9 @@ contract Fund {
             Campaign storage campaign = campaigns[_id];
             campaign.donators.push(msg.sender);
             campaign.donations.push(amount);
-            (bool sent,) = payable(campaign.owner).call{value:amount}("");
-            if (sent) {
-                campaign.amountCollected+=amount;
-            }
+            if (payable(campaign.owner).send(amount)) {
+                campaign.amountCollected += amount;
+            } 
     }
     
     function getDonators(uint256 _id) public view returns (address[] memory, uint256[] memory) {

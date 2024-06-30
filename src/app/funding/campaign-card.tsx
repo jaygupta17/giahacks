@@ -5,22 +5,27 @@ import { Close } from "@radix-ui/react-toast"
 import { Cross, CrossIcon, ReplyIcon, ShieldCloseIcon, Undo2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
-import { Suspense, useContext, useState, useTransition } from "react"
+import { Suspense, useContext, useState } from "react"
 
 export const CampaignCard = ({title,pId,owner,amountCollected,descr,target}:{title:string,pId:any,owner:any,amountCollected:any,descr:string,target:string}) => {
     const [open , setopen] = useState(false)
-    const {donate,isPending} = useContext(Web3Context)
+    const {donate,loading , checkIfWalletConnected} = useContext(Web3Context)
     const [value,setValue] = useState<any>()
     const donatemoney = () => {
-
-            donate(pId,value).then((res:any)=>res)
+        checkIfWalletConnected().then((res:any)=>{
+            if(res.error){ return alert(res.error)}
+            if (res.success){
+                donate(pId,value).then((res:any)=>res)
+            }
+        })
+            
     }
     return(
         <Suspense fallback={<p>Loading</p>}>
 
         <div className="w-full gap-y-3 flex flex-col px-4 py-4 bg-white/10 hover:bg-white/5 border border-white/80">
         <div className="flex self-start items-center gap-4">
-            <Image className="w-10 h-10 rounded-full" width={20} height={20} src="/adminuser/back.jpg" alt="bnone" />
+            <Image className="size-12 rounded-full" width={100} height={100} src="/profile.png" alt="bnone" />
             <div className="font-medium text-white">
                 <div>Campaign</div>
                 <div className="text-sm text-gray-400">{owner}</div>
@@ -45,8 +50,8 @@ export const CampaignCard = ({title,pId,owner,amountCollected,descr,target}:{tit
             </div > : <div className="flex text-white">Reply &nbsp;  <ReplyIcon onClick={()=>setopen(true)} className="text-white cursor-pointer size-8"/></div>}
         </div>
         <div className="grid place-content-center gap-x-4 grid-cols-2">
-            <input type="text" className="dark:text-white" disabled={isPending} onChange={(e)=>setValue(e.target.value)} />
-        <Button disabled={isPending} className="hover:bg-indigo-500 bg-indigo-600" onClick={donatemoney}>{isPending ? "Loading" : "Fund"}</Button>
+            <input type="text" className="dark:text-white" disabled={loading} onChange={(e)=>setValue(e.target.value)} />
+        <Button disabled={loading} className="hover:bg-indigo-500 bg-indigo-600" onClick={donatemoney}>{loading ? "Loading" : "Fund"}</Button>
         </div>
 </div>
 </Suspense>

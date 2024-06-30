@@ -25,7 +25,6 @@ import {
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { SetStateAction, useContext } from "react"
-import { createComplaint } from "../../../actions"
 import { Web3Context } from "@/context/Web3Context"
 
 const formSchema = z.object({
@@ -37,6 +36,7 @@ const formSchema = z.object({
 })
 
 export function CampaignForm() {
+  const {checkIfWalletConnected,loading} = useContext(Web3Context)
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -44,7 +44,16 @@ export function CampaignForm() {
   })
   const {createCampaign} = useContext(Web3Context)
   function onSubmit(values: z.infer<typeof formSchema>) {
-    createCampaign(values).then((res:any)=>alert("done"))
+    checkIfWalletConnected().then((res:any)=>{
+        if(res.error){ return alert(res.error)}
+        if (res.success){
+          createCampaign(values).then((res:any)=>{
+            if(res.success) alert(res.success)
+              if(res.error) alert(res.error)
+          })
+        }
+    })
+   
   }
 
   return (
