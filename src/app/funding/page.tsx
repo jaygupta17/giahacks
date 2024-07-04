@@ -1,6 +1,6 @@
 // src/app/complaint/page.tsx
 'use client';
-
+import toast, { Toaster } from 'react-hot-toast';
 import { Suspense, useContext, useEffect, useState } from "react";
 import { Button } from "@/components/ui/button";
 import { CampaignCard } from "./campaign-card";
@@ -39,6 +39,7 @@ const CampaignPage = () => {
            
 ))}
         </div>
+      <Toaster />
     </div>
   )
 };

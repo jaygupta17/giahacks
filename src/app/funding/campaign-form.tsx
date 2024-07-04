@@ -26,6 +26,7 @@ import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import { SetStateAction, useContext } from "react"
 import { Web3Context } from "@/context/Web3Context"
+import toast, { Toaster } from "react-hot-toast"
 
 const formSchema = z.object({
   title: z.string().min(2, {
